@@ -1,0 +1,123 @@
+
+// region ///////////////////////////////////////////////////////////////   Unit Functions
+
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+@function computed($size) {
+  @if unit($size) == rem {
+    $size: (strip-unit($size) * strip-unit($font-size-root)) * 1px;
+  }
+
+  @return $size;
+}
+
+@function font-size-computed($fnt-size-root, $fnt-size-base) {
+  @if unit($fnt-size-base) == px {
+    @return $fnt-size-base;
+  }
+
+  @return (strip-unit($fnt-size-root) * strip-unit($fnt-size-base)) * 1px;
+}
+
+// endregion ////////////////////////////////////////////////////////////   End Unit Functions
+
+// region ///////////////////////////////////////////////////////////////   String Functions
+
+// Replace `$search` with `$replace` in `$string`
+// @author Hugo Giraudel
+// @param {String} $string - Initial string
+// @param {String} $search - Substring to replace
+// @param {String} $replace ('') - New value
+// @return {String} - Updated string
+@function str-replace($string, $search, $replace: "") {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+// endregion ////////////////////////////////////////////////////////////   End String Functions
+
+// region ///////////////////////////////////////////////////////////////   Map Functions
+
+@function map-deep-get($map, $keys...) {
+  @if type_of($map) == map {
+    @each $key in $keys {
+      @if type_of($map) == map {
+        $map: map-get($map, $key);
+      } @else {
+        @warn ("Key #{$key} does not contain a map.");
+      }
+    }
+  } @else {
+    @warn ("Argument provided to map-deep-get is not a map!");
+  }
+
+  @return $map;
+}
+
+@function map-get-next($map, $key, $fallback: false) {
+
+  // Check if map is valid
+  @if type_of($map) == map {
+
+    // Check if key exists in map
+    @if map_has_key($map, $key) {
+
+      // Init index counter variable
+      $i: 0;
+
+      // Init key index
+      $key-index: false;
+
+      // Traverse map for key
+      @each $map-key, $map-value in $map {
+        // Update index
+        $i: $i + 1;
+
+        // If map key found, set key index
+        @if $map-key == $key {
+          $key-index: $i;
+        }
+
+        // If next index return next value
+        @if $i == $key-index + 1 {
+          @return $map-value;
+        }
+
+        // If last entry return false
+        @if $i == length($map) {
+          @return $fallback;
+        }
+      }
+
+      @warn 'No next map item for key #{$key}';
+      @return $fallback;
+    }
+
+    @warn 'No valid key #{$key} in map';
+    @return $fallback;
+  }
+
+  @warn 'No valid map';
+  @return $fallback;
+}
+
+// endregion ////////////////////////////////////////////////////////////   End Map Functions
+
+// region ///////////////////////////////////////////////////////////////   Constant Functions
+
+@function const($name) {
+  @if not map-has-key($CONSTANTS, $name) {
+    @error 'Unknown constant `#{$name}`.';
+  }
+
+  @return map-get($CONSTANTS, $name);
+}
+
+// endregion ////////////////////////////////////////////////////////////   End Constant Functions
