@@ -1,3 +1,4 @@
+@import "root-variables";
 
 // region ///////////////////////////////////////////////////////////////   Unit Functions
 
@@ -112,6 +113,13 @@
 
 // region ///////////////////////////////////////////////////////////////   Constant Functions
 
+/// Constant Getter - Credit to https://twitter.com/HugoGiraudel
+///
+/// @param    {String} $name          Name of constant to get
+///
+/// @return   {*}                     Constant value
+/// @require            $CONSTANTS
+/// @throw    'Unknown constant `#{$name}`.'
 @function const($name) {
   @if not map-has-key($CONSTANTS, $name) {
     @error 'Unknown constant `#{$name}`.';
