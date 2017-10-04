@@ -134,7 +134,7 @@
 
 // endregion ////////////////////////////////////////////////////////////   End Constant Functions
 
-// region ///////////////////////////////////////////////////////////////   Other Functions
+// region ///////////////////////////////////////////////////////////////   Space Functions
 
 @function _get-space($size,$axis) {
   @if map-has-key($spacing,$size) {
@@ -155,7 +155,7 @@
   }
   $spacing-temp: map-merge($spacing-temp, ($axis: $value));
 
-  @return map-merge($spacing,$spacing-temp);
+  @return map-merge($spacing,($size: $spacing-temp));
 }
 
 @function space-x($size) {
@@ -172,6 +172,26 @@
 
 @function set-space-y($size,$value) {
   @return _set-space($size, y, $value);
+}
+
+// endregion ////////////////////////////////////////////////////////////   End Space Functions
+
+// region ///////////////////////////////////////////////////////////////   Other Functions
+
+@function feature($key) {
+  @if map-has-key($features,$key) {
+    @return map-get($features,$key);
+  }
+
+  @error "The feature `#{$key}` does not exist in the $features map.";
+}
+
+@function set-feature($key,$value) {
+  @if map-has-key($features,$key) {
+    $features: map-remove($features,$key);
+  }
+
+  @return map-merge($features,($key: $value))
 }
 
 // endregion ////////////////////////////////////////////////////////////   End Other Functions
