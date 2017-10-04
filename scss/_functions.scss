@@ -8,6 +8,9 @@
 
 @function computed($size) {
   @if unit($size) == rem {
+    @if variable_exists(font-size-root) == false {
+      @error 'You must set the $font-size-root variable prior to the first usage of the `computed` function.';
+    }
     $size: (strip-unit($size) * strip-unit($font-size-root)) * 1px;
   }
 
