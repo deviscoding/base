@@ -36,7 +36,8 @@
   $index: str-index($string, $search);
 
   @if $index {
-    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+    @return str-slice($string, 1, $index - 1) + $replace +
+      str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
   }
 
   @return $string;
@@ -129,3 +130,45 @@
 }
 
 // endregion ////////////////////////////////////////////////////////////   End Constant Functions
+
+// region ///////////////////////////////////////////////////////////////   Other Functions
+
+@function _get-space($size,$axis) {
+  @if map-has-key($spacing,$size) {
+    @return map-deep-get($spacing,$size,$axis);
+  }
+
+  @error 'The spacing map does not contain the size: `#{$size}`.';
+}
+
+@function _set-space($size,$axis,$value) {
+  $spacing-temp: ();
+  @if map-has-key($spacing,$size) {
+    $spacing-temp: map-get($spacing, $size);
+    $spacing: map-remove($spacing, $size);
+  }
+  @if map-has-key($spacing-temp, $axis) {
+    $spacing-temp: map-remove($spacing-temp, $axis);
+  }
+  $spacing-temp: map-merge($spacing-temp, ($axis: $value));
+
+  @return map-merge($spacing,$spacing-temp);
+}
+
+@function space-x($size) {
+  @return _get-space($size, x);
+}
+
+@function space-y($size) {
+  @return _get-space($size, x);
+}
+
+@function set-space-x($size,$value) {
+  @return _set-space($size, x, $value);
+}
+
+@function set-space-y($size,$value) {
+  @return _set-space($size, y, $value);
+}
+
+// endregion ////////////////////////////////////////////////////////////   End Other Functions
