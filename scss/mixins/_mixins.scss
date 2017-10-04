@@ -1,0 +1,75 @@
+
+@import "media-query";
+@import "vendor-prefixes";
+@import "visibility";
+@import "../../../scss/base/base-variables";
+
+// region ///////////////////////////////////////////////////////////////   Material Design Shadows
+
+@mixin elevation($level) {
+  @if feature(shadows) {
+    @if $level == 0 {
+      box-shadow: none;
+    }
+    @if $level == 1 {
+      box-shadow: 0 1px 1px 0 rgba(0, 0, 0, $shadow-key-penumbra-opacity),
+                  0 2px 1px -1px rgba(0, 0, 0, $shadow-key-umbra-opacity),
+                  0 1px 3px 0 rgba(0, 0, 0, $shadow-ambient-shadow-opacity);
+    }
+    @if $level == 2 {
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, $shadow-key-penumbra-opacity),
+                  0 3px 1px -2px rgba(0, 0, 0, $shadow-key-umbra-opacity),
+                  0 1px 5px 0 rgba(0, 0, 0, $shadow-ambient-shadow-opacity);
+    }
+    @else if $level == 3 {
+      box-shadow: 0 3px 4px 0 rgba(0, 0, 0, $shadow-key-penumbra-opacity),
+                  0 3px 3px -2px rgba(0, 0, 0, $shadow-key-umbra-opacity),
+                  0 1px 8px 0 rgba(0, 0, 0, $shadow-ambient-shadow-opacity);
+    }
+    @else if $level == 4 {
+      box-shadow: 0 4px 5px 0 rgba(0, 0, 0, $shadow-key-penumbra-opacity),
+                  0 1px 10px 0 rgba(0, 0, 0, $shadow-ambient-shadow-opacity),
+                  0 2px 4px -1px rgba(0, 0, 0, $shadow-key-umbra-opacity);
+    }
+    @else if $level == 6 {
+      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, $shadow-key-penumbra-opacity),
+                  0 1px 18px 0 rgba(0, 0, 0, $shadow-ambient-shadow-opacity),
+                  0 3px 5px -1px rgba(0, 0, 0, $shadow-key-umbra-opacity);
+    }
+    @else if $level == 8 {
+      box-shadow: 0 8px 10px 1px rgba(0, 0, 0, $shadow-key-penumbra-opacity),
+                  0 3px 14px 2px rgba(0, 0, 0, $shadow-ambient-shadow-opacity),
+                  0 5px 5px -3px rgba(0, 0, 0, $shadow-key-umbra-opacity);
+    }
+    @else if $level == 16 {
+      box-shadow: 0 16px 24px 2px rgba(0, 0, 0, $shadow-key-penumbra-opacity),
+                  0  6px 30px 5px rgba(0, 0, 0, $shadow-ambient-shadow-opacity),
+                  0  8px 10px -5px rgba(0, 0, 0, $shadow-key-umbra-opacity);
+    }
+    @else if $level == 24 {
+      box-shadow: 0  9px 46px  8px rgba(0, 0, 0, $shadow-key-penumbra-opacity),
+                  0 11px 15px -7px rgba(0, 0, 0, $shadow-ambient-shadow-opacity),
+                  0 24px 38px  3px rgba(0, 0, 0, $shadow-key-umbra-opacity);
+    }
+  }
+}
+
+// endregion ////////////////////////////////////////////////////////////   End Material Design Shadows
+
+// region ///////////////////////////////////////////////////////////////   Other
+
+// Adds the proper rules for truncating text.  Note that the selector this mixin is used
+// for must be a 'block' type (flex, block, inline-block, etc).
+@mixin truncate($maxWidth: 100%, $isFlex: false) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: $maxWidth;
+  white-space: nowrap;
+  @if($isFlex) {
+    //noinspection CssInvalidPropertyValue
+    -ms-flex-wrap: none;
+    flex-wrap: nowrap;
+  }
+}
+
+// endregion ////////////////////////////////////////////////////////////   End Other

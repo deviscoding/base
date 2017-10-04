@@ -1,0 +1,35 @@
+@import "../../../scss/type/type-variables";
+@import "../../../scss/grid/grid-variables";
+
+// Note: This mixin is for legacy bootstrap code that calls it.  Vendor prefixes aren't needed for opacity.
+@mixin opacity($o) {
+  opacity: $o;
+}
+
+@mixin user-select($value) {
+  user-select: $value;
+}
+
+@mixin font-short($font-args) {
+  $fnt-style: map-get($font-args,'style');
+  $fnt-variant: map-get($font-args,'variant');
+  $fnt-weight: map-get($font-args,'weight');
+  $fnt-size: map-get($font-args,'size');
+  $line-height: map-get($font-args,'height');
+  $fnt-family: map-get($font-args,'family');
+  $fnt-family: $font-family-base !default;
+  $fnt-size: $font-size-base !default;
+
+  // Put the / before the line height
+  @if $line-height {
+    $line-height: \/#{$line-height};
+  }
+
+  // Font Declaration Shorthand
+  font: $fnt-style $fnt-variant $fnt-weight $fnt-size$line-height $fnt-family;
+
+  // IE9/10 Cannot Deal with REM in a font shorthand declaration, so we need to repeat it.
+  @if unit($fnt-size) == rem {
+    font-size: $fnt-size;
+  }
+}
