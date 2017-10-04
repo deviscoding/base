@@ -194,4 +194,21 @@
   @return map-merge($features,($key: $value))
 }
 
+@function set-breakpoint($key,$value) {
+  @if map-has-key($grid-breakpoints,$key) {
+    $grid-breakpoints: map-remove($grid-breakpoints, $key);
+  }
+
+  @return map-merge($grid-breakpoints,($key: $value));
+}
+
+@function breakpoint($key) {
+  @if map-has-key($grid-breakpoints,$key) {
+    @return map-get($grid-breakpoints, $key);
+  }
+
+  @error "The breakpoint `#{$key} does not exist in the $grid-breakpoints map.";
+}
+
+
 // endregion ////////////////////////////////////////////////////////////   End Other Functions
