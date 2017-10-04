@@ -16,6 +16,37 @@ $zindex: (
 
 // endregion ////////////////////////////////////////////////////////////  End ZIndex Registry
 
+// region ///////////////////////////////////////////////////////////////   Sizing and Spacing
+
+// Default Padding (in rem for modern browsers, px for baseline - based off $font-size-base)
+$spacing: (
+    lg:   (x: 1.14, y: 0.66),
+    md:   (x: 1.00, y: 0.50),
+    sm:   (x: 0.66, y: 0.35),
+    xs:   (x: 0.35, y: 0.10)
+          ) !default;
+
+// endregion ////////////////////////////////////////////////////////////   End Sizing and Spacing
+
+// region ///////////////////////////////////////////////////////////////   Breakpoint & Grid
+
+$grid-breakpoints: (
+     xs: 0,
+     sm: 576px,
+     md: 768px,
+     lg: 992px,
+     xl: 1200px
+                   ) !default;
+
+$container-max-widths: (
+     sm: 540px,
+     md: 720px,
+     lg: 960px,
+     xl: 1140px
+                       ) !default;
+
+// endregion ////////////////////////////////////////////////////////////   End Breakpoint & Grid
+
 // region ///////////////////////////////////////////////////////////////  Utility Variables
 
 $utility:
