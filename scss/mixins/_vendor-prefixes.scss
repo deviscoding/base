@@ -1,5 +1,4 @@
 @import "../../../scss/type/type-variables";
-@import "../../../scss/grid/grid-variables";
 
 // Note: This mixin is for legacy bootstrap code that calls it.  Vendor prefixes aren't needed for opacity.
 @mixin opacity($o) {
