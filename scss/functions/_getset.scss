@@ -68,7 +68,7 @@
 // region ///////////////////////////////////////////////////////////////   Setter Functions
 
 @mixin set-feature($key,$value) {
-  @if not(map-exists(features)) {
+  @if not(variable-exists(features)) {
     @error "You may not use the `set-feature` mixin prior without the $features map.  Please include `root-variables` prior to this usage."
   } @else {
     $features: set-map-key($features,$key,$value);
@@ -76,7 +76,7 @@
 }
 
 @mixin set-breakpoint($breakpoint,$value) {
-  @if not(map-exists(grid-breakpoints)) {
+  @if not(variable-exists(grid-breakpoints)) {
     @error "You may not use the `set-breakpoint` mixin without the $grid-breakpoints map.  Please include `root-variables` prior to this usage."
   } @else {
     $grid-breakpoints: set-map-key($grid-breakpoints, $breakpoint, $value);
@@ -84,7 +84,7 @@
 }
 
 @mixin set-max-width($breakpoint,$value) {
-  @if not(map-exists(grid-breakpoints)) {
+  @if not(variable-exists(grid-breakpoints)) {
     @error "You may not use the `set-max-width` mixin without the $container-max-widths map.  Please include `root-variables` prior to this usage."
   } @else {
     $container-max-widths: set-map-key($container-max-widths, $breakpoint, $value);
@@ -93,7 +93,7 @@
 
 @mixin _set-space($size,$axis,$value) {
   $spacing-temp: ();
-  @if not(map-exists(spacing)) {
+  @if not(variable-exists(spacing)) {
     @error "You may not use the `set-space-*` mixins without the $spacing map.  Please include `root-variables` prior to this usage."
   } @else {
     @if map-has-key($spacing,$size) {

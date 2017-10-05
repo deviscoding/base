@@ -37,8 +37,11 @@ $features: (
    transitions: true,
    print: true,
    grid: true,
+   font-icons: true,
    svg-icons: false,
-           );
+   font-awesome-icons: false,
+   unicode-icons: false,
+           ) !global;
 
 // endregion ////////////////////////////////////////////////////////////   End Features
 
