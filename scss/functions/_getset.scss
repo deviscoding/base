@@ -41,6 +41,27 @@
   @error "The feature `#{$key}` does not exist in the $features map.";
 }
 
+// region ///////////////////////////////////////////////////////////////   Other Functions
+
+@function _get-space($size,$axis) {
+  @if map-has-key($spacing,$size) {
+    @return map-deep-get($spacing,$size,$axis);
+  }
+
+  @error 'The spacing map does not contain the size: `#{$size}`.';
+}
+
+@function space-x($size) {
+  @return _get-space($size, x);
+}
+
+@function space-y($size) {
+  @return _get-space($size, x);
+}
+
+// endregion ////////////////////////////////////////////////////////////   End Other Functions
+
+
 
 // endregion ////////////////////////////////////////////////////////////   End Getter Functions
 
@@ -68,6 +89,32 @@
   } @else {
     $container-max-widths: set-map-key($container-max-widths, $breakpoint, $value);
   }
+}
+
+@mixin _set-space($size,$axis,$value) {
+  $spacing-temp: ();
+  @if not(map-exists(spacing)) {
+    @error "You may not use the `set-space-*` mixins without the $spacing map.  Please include `root-variables` prior to this usage."
+  } @else {
+    @if map-has-key($spacing,$size) {
+      $spacing-temp: map-get($spacing, $size);
+      $spacing: map-remove($spacing, $size);
+    }
+    @if map-has-key($spacing-temp, $axis) {
+      $spacing-temp: map-remove($spacing-temp, $axis);
+    }
+    $spacing-temp: map-merge($spacing-temp, ($axis: $value));
+
+    $spacing: map-merge($spacing,$spacing-temp);
+  }
+}
+
+@mixin set-space-x($size,$value) {
+  @include _set-space($size, x, $value);
+}
+
+@mixin set-space-y($size,$value) {
+  @include _set-space($size, y, $value);
 }
 
 // endregion ////////////////////////////////////////////////////////////   End Setter Functions
