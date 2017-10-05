@@ -1,12 +1,20 @@
 
 // region ///////////////////////////////////////////////////////////////   Getter Functions
 
-@function breakpoint($key) {
-  @if map-has-key($grid-breakpoints,$key) {
-    @return map-get($grid-breakpoints, $key);
+@function breakpoint($breakpoint) {
+  @if map-has-key($grid-breakpoints,$breakpoint) {
+    @return map-get($grid-breakpoints, $breakpoint);
   }
 
-  @error "The breakpoint `#{$key} does not exist in the $grid-breakpoints map.";
+  @error "The breakpoint `#{$breakpoint} does not exist in the $grid-breakpoints map.";
+}
+
+@function container($breakpoint) {
+  @if map-has-key($container-max-widths,$breakpoint) {
+    @return map-get($container-max-widths, $breakpoint);
+  }
+
+  @error "The breakpoint `#{$breakpoint} does not exist in the $container-max-widths map.";
 }
 
 /// Constant Getter - Credit to https://twitter.com/HugoGiraudel
@@ -41,8 +49,12 @@
   @return set-map-key($features,$key,$value);
 }
 
-@function set-breakpoint($key,$value) {
-  @return set-map-key($grid-breakpoints,$key,$value);
+@function set-breakpoint($breakpoint,$value) {
+  @return set-map-key($grid-breakpoints,$breakpoint,$value);
+}
+
+@function set-max-width($breakpoint,$value) {
+  @return set-map-key($container-max-widths,$breakpoint,$value);
 }
 
 // endregion ////////////////////////////////////////////////////////////   End Setter Functions
