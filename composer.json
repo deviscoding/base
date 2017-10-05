@@ -1,0 +1,21 @@
+{
+  "name": "strapless/base",
+  "description": "SASS Functions & mixins for managing variables within various SASS components.",
+  "keywords": [
+      "sass",
+      "variables",
+      "maps",
+      "scss",
+      "strapless",
+      "css"
+  ],
+  "homepage": "https://www.github.com/strapless/base",
+  "version": "1.0",
+  "authors": [
+      {
+          "name": "Aaron M Jones",
+          "homepage": "http://www.jonesiscoding.com"
+      }
+  ],
+  "license": "MIT"
+}
