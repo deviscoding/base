@@ -17,6 +17,14 @@
   @return $map;
 }
 
+@function map-exists($map-name) {
+  @if global-variable-exists($map-name) {
+    @return false;
+  }
+
+  @return true;
+}
+
 @function map-get-next($map, $key, $fallback: false) {
 
   // Check if map is valid

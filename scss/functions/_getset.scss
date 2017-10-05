@@ -1,3 +1,4 @@
+@import "map";
 
 // region ///////////////////////////////////////////////////////////////   Getter Functions
 
@@ -45,16 +46,28 @@
 
 // region ///////////////////////////////////////////////////////////////   Setter Functions
 
-@function set-feature($key,$value) {
-  @return set-map-key($features,$key,$value);
+@mixin set-feature($key,$value) {
+  @if not(map-exists(features)) {
+    @error "You may not use the `set-feature` mixin prior without the $features map.  Please include `root-variables` prior to this usage."
+  } @else {
+    $features: set-map-key($features,$key,$value);
+  }
 }
 
-@function set-breakpoint($breakpoint,$value) {
-  @return set-map-key($grid-breakpoints,$breakpoint,$value);
+@mixin set-breakpoint($breakpoint,$value) {
+  @if not(map-exists(grid-breakpoints)) {
+    @error "You may not use the `set-breakpoint` mixin without the $grid-breakpoints map.  Please include `root-variables` prior to this usage."
+  } @else {
+    $grid-breakpoints: set-map-key($grid-breakpoints, $breakpoint, $value);
+  }
 }
 
-@function set-max-width($breakpoint,$value) {
-  @return set-map-key($container-max-widths,$breakpoint,$value);
+@mixin set-max-width($breakpoint,$value) {
+  @if not(map-exists(grid-breakpoints)) {
+    @error "You may not use the `set-max-width` mixin without the $container-max-widths map.  Please include `root-variables` prior to this usage."
+  } @else {
+    $container-max-widths: set-map-key($container-max-widths, $breakpoint, $value);
+  }
 }
 
 // endregion ////////////////////////////////////////////////////////////   End Setter Functions
