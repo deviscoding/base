@@ -1,8 +1,7 @@
 
-@import "media-query";
-@import "vendor-prefixes";
-@import "visibility";
-@import "../../../scss/theme/theme-variables";
+@import "variables/root-variables";
+@import "functions/getset";
+@import "../../scss/theme/theme-variables";
 
 // region ///////////////////////////////////////////////////////////////   Material Design Shadows
 

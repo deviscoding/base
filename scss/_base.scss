@@ -8,6 +8,6 @@
 // Mixins
 @import "mixins/media-query";
 @import "mixins/vendor-prefixes";
-@import "mixins/visibility";
+@import "../../display/scss/display-mixins";
 @import "mixins/rounding";
-@import "mixins/mixins";
+@import "base-mixins";
