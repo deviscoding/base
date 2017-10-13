@@ -56,7 +56,7 @@
 }
 
 @function space-y($size) {
-  @return _get-space($size, x);
+  @return _get-space($size, y);
 }
 
 // endregion ////////////////////////////////////////////////////////////   End Other Functions
