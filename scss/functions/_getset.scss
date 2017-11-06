@@ -33,12 +33,50 @@
   @return map-get($CONSTANTS, $name);
 }
 
-@function feature($key) {
-  @if map-has-key($features,$key) {
-    @return map-get($features,$key);
+@function component($c) {
+  $cKey: quote($c);
+  @if map-has-key($components, $cKey) {
+    $component: map-get($components, $cKey);
+    @if type-of($component) == "map" {
+      @if map-has-key($component, "_enabled") {
+        @return map-get($component, "_enabled");
+      } @else {
+        @error "The component `#{$c}` does not indicate whether or not it is enabled.";
+      }
+    } @else {
+      @return $component;
+    }
   }
 
-  @error "The feature `#{$key}` does not exist in the $features map.";
+  @error "The component `#{$c}` does not exist in the `$components` map.";
+}
+
+@function component-feature($c,$f) {
+  $cKey: quote($c);
+  @if not(map-has-key($components,$cKey)) {
+    @error "The component `#{$c} does not seem to exist within the `$components` map."
+  } @else {
+    $component: map-get($components, $cKey);
+    @if type-of($component) != "map" {
+      @error "The component `#{$c}` does not have individual features.";
+    } @else {
+      $fKey: quote($f);
+      @if not(map-has-key($component),$fKey) {
+        @error "The component `#{$c}` does not have a feature named `#{$f}`.";
+      } @else {
+        @return map-get($component, $fKey);
+      }
+    }
+  }
+}
+
+@function theme($prop) {
+  $pKey: quote($prop);
+  @if (map-has-key($theme, $pKey)) {
+    @return map-get($theme, $pKey);
+  }
+
+  @error "The property `#{$prop}` is not a key in the `$theme` map.";
 }
 
 // region ///////////////////////////////////////////////////////////////   Other Functions
@@ -61,17 +99,56 @@
 
 // endregion ////////////////////////////////////////////////////////////   End Other Functions
 
-
-
 // endregion ////////////////////////////////////////////////////////////   End Getter Functions
 
 // region ///////////////////////////////////////////////////////////////   Setter Functions
 
-@mixin set-feature($key,$value) {
-  @if not(variable-exists(features)) {
-    @error "You may not use the `set-feature` mixin prior without the $features map.  Please include `root-variables` prior to this usage."
+@mixin set-component($c,$v) {
+  @if not(variable-exists(components)) {
+    @error "You may not use the `set-component` mixin prior without the $components map.  Please include `root-variables` prior to this usage."
   } @else {
-    $features: set-map-key($features,$key,$value);
+    @if type-of($v) != "bool" {
+      @error "You may only set a component to TRUE or FALSE, indicating whether it is enabled";
+    } @else {
+      $cKey: quote($c);
+      @if not(map-has-key($components,$cKey)) {
+        $components: set-map-key($components, $cKey, $v);
+      } @else {
+        $component: map-get($components, $cKey);
+        @if type-of($component) == "map" {
+          $component: set-map-key($component, "_enabled", $v);
+          $components: set-map-key($components, $cKey, $component);
+        } @else {
+          $components: set-map-key($components, $cKey, $v);
+        }
+      }
+    }
+  }
+}
+
+@mixin set-component-feature($c, $f, $v) {
+  @if not(variable_exists(components)) {
+    @error "You may not use the `set-component-feature` mixin prior without the $components map.  Please include `root-variables` prior to this usage."
+  } @else {
+    @if type-of($v) != "bool" {
+      @error "You may only set a component feature to TRUE or FALSE, indicating whether it is enabled";
+    } @else {
+      $cKey: quote($c);
+      @if not(map-has-key($components, $cKey)) {
+        @error "The component `#{$c} does not seem to exist in the `$components` map!";
+      } @else {
+        $component: map-get($components, $cKey);
+        $fKey: quote($f);
+        $new : null;
+        @if type_of($component) != "map" {
+          $new: ("_enabled": $component, $fKey: $v);
+        } @else {
+          $new: set-map-key($component,$fKey,$v);
+        }
+
+        $components: set-map-key($components, $cKey, $new);
+      }
+    }
   }
 }
 

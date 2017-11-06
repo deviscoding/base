@@ -1,33 +1,33 @@
 
 @mixin border-radius($radius: $border-radius) {
-  @if feature(rounded) {
+  @if theme("rounded") {
     border-radius: $radius;
   }
 }
 
-@mixin border-top-radius($radius) {
-  @if feature(rounded) {
+@mixin border-top-radius($radius: $border-radius) {
+  @if theme("rounded") {
     border-top-right-radius: $radius;
     border-top-left-radius: $radius;
   }
 }
 
-@mixin border-right-radius($radius) {
-  @if feature(rounded) {
+@mixin border-right-radius($radius: $border-radius) {
+  @if theme("rounded") {
     border-bottom-right-radius: $radius;
     border-top-right-radius: $radius;
   }
 }
 
-@mixin border-bottom-radius($radius) {
-  @if feature(rounded) {
+@mixin border-bottom-radius($radius: $border-radius) {
+  @if theme("rounded") {
     border-bottom-right-radius: $radius;
     border-bottom-left-radius: $radius;
   }
 }
 
-@mixin border-left-radius($radius) {
-  @if feature(rounded) {
+@mixin border-left-radius($radius: $border-radius) {
+  @if theme("rounded") {
     border-bottom-left-radius: $radius;
     border-top-left-radius: $radius;
   }

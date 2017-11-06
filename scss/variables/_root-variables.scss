@@ -30,18 +30,28 @@ $spacing: (
 
 // region ///////////////////////////////////////////////////////////////   Features
 
-$features: (
-   touch: false,
-   rounded: true,
-   shadows: true,
-   transitions: true,
-   print: true,
-   grid: true,
-   font-icons: true,
-   svg-icons: false,
-   font-awesome-icons: false,
-   unicode-icons: false,
-           ) !global;
+$components: (
+    "card": true,
+    "display": true,
+    "flexbox": true,
+    "grid": true,
+    "icons": (
+        "_enabled": true,
+        "font": true,
+        "svg": false,
+        "font-awesome": true,
+        "unicode": false,
+    ),
+    "print": true
+            ) !global;
+
+
+$theme: (
+   "touch": false,
+   "rounded": true,
+   "shadows": true,
+   "transitions": true,
+        ) !global;
 
 // endregion ////////////////////////////////////////////////////////////   End Features
 
