@@ -31,19 +31,20 @@ $spacing: (
 // region ///////////////////////////////////////////////////////////////   Features
 
 $components: (
+    "buttons": true,
     "card": true,
     "display": true,
     "flexbox": true,
     "grid": true,
     "icons": (
-        "_enabled": true,
-        "font": true,
-        "svg": false,
-        "font-awesome": true,
-        "unicode": false,
+       "_enabled": true,
+       "font": true,
+       "svg": false,
+       "font-awesome": true,
+       "unicode": false,
     ),
     "print": true
-            ) !global;
+             ) !default;
 
 
 $theme: (
@@ -51,7 +52,7 @@ $theme: (
    "rounded": true,
    "shadows": true,
    "transitions": true,
-        ) !global;
+        ) !default;
 
 // endregion ////////////////////////////////////////////////////////////   End Features
 
@@ -100,7 +101,7 @@ $display:
 
 // endregion ////////////////////////////////////////////////////////////  End Utility Variables
 
-$CONSTANTS: () !global;
-$CONSTANTS: map-merge($CONSTANTS, $zindex) !global;
-$CONSTANTS: map-merge($CONSTANTS, (UTILITY: $utility)) !global;
-$CONSTANTS: map-merge($CONSTANTS, (DISPLAY: $display)) !global;
+$CONSTANTS: () !default;
+$CONSTANTS: map-merge($CONSTANTS, $zindex);
+$CONSTANTS: map-merge($CONSTANTS, (UTILITY: $utility));
+$CONSTANTS: map-merge($CONSTANTS, (DISPLAY: $display));
