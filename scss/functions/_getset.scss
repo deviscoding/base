@@ -152,6 +152,23 @@
   }
 }
 
+@mixin set-theme($f,$v) {
+  @if not(variable_exists(theme)) {
+    @error "You may not use the `set-theme` mixin prior without the $theme map.  Please include `root-variables` prior to this usage."
+  } @else {
+    @if type-of($v) != "bool" {
+      @error "You may only set a theme feature to TRUE or FALSE, indicating whether it is enabled";
+    } @else {
+      $fKey: quote($f);
+      @if not(map-has-key($theme, $fKey)) {
+        @error "The component `#{$f} does not seem to exist in the `$theme` map!";
+      } @else {
+        $theme: set-map-key($theme, $fKey, $v) !global;
+      }
+    }
+  }
+}
+
 @mixin set-breakpoint($breakpoint,$value) {
   @if not(variable-exists(grid-breakpoints)) {
     @error "You may not use the `set-breakpoint` mixin without the $grid-breakpoints map.  Please include `root-variables` prior to this usage."
