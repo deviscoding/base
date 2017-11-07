@@ -112,14 +112,14 @@
     } @else {
       $cKey: quote($c);
       @if not(map-has-key($components,$cKey)) {
-        $components: set-map-key($components, $cKey, $v);
+        $components: set-map-key($components, $cKey, $v) !global;
       } @else {
         $component: map-get($components, $cKey);
         @if type-of($component) == "map" {
           $component: set-map-key($component, "_enabled", $v);
-          $components: set-map-key($components, $cKey, $component);
+          $components: set-map-key($components, $cKey, $component) !global;
         } @else {
-          $components: set-map-key($components, $cKey, $v);
+          $components: set-map-key($components, $cKey, $v) !global;
         }
       }
     }
@@ -146,7 +146,7 @@
           $new: set-map-key($component,$fKey,$v);
         }
 
-        $components: set-map-key($components, $cKey, $new);
+        $components: set-map-key($components, $cKey, $new) !global;
       }
     }
   }
@@ -156,7 +156,7 @@
   @if not(variable-exists(grid-breakpoints)) {
     @error "You may not use the `set-breakpoint` mixin without the $grid-breakpoints map.  Please include `root-variables` prior to this usage."
   } @else {
-    $grid-breakpoints: set-map-key($grid-breakpoints, $breakpoint, $value);
+    $grid-breakpoints: set-map-key($grid-breakpoints, $breakpoint, $value) !global;
   }
 }
 
@@ -164,7 +164,7 @@
   @if not(variable-exists(grid-breakpoints)) {
     @error "You may not use the `set-max-width` mixin without the $container-max-widths map.  Please include `root-variables` prior to this usage."
   } @else {
-    $container-max-widths: set-map-key($container-max-widths, $breakpoint, $value);
+    $container-max-widths: set-map-key($container-max-widths, $breakpoint, $value) !global;
   }
 }
 
@@ -175,14 +175,14 @@
   } @else {
     @if map-has-key($spacing,$size) {
       $spacing-temp: map-get($spacing, $size);
-      $spacing: map-remove($spacing, $size);
+      $spacing: map-remove($spacing, $size) !global;
     }
     @if map-has-key($spacing-temp, $axis) {
       $spacing-temp: map-remove($spacing-temp, $axis);
     }
     $spacing-temp: map-merge($spacing-temp, ($axis: $value));
 
-    $spacing: map-merge($spacing,$spacing-temp);
+    $spacing: map-merge($spacing,$spacing-temp) !global;
   }
 }
 
