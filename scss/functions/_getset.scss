@@ -81,25 +81,33 @@
 
 // region ///////////////////////////////////////////////////////////////   Other Functions
 
-@function _get-space($size,$axis) {
+@function _get-space($size,$axis, $units: null) {
   @if map-has-key($spacing,$size) {
-    @return map-deep-get($spacing,$size,$axis);
+    $value: map-deep-get($spacing,$size,$axis);
+
+    @if $units == px and unit($value) == rem {
+      @return $font-size-root * strip-unit($value);
+    }
+
+    @if $units == rem and unit($value) == px {
+      @return (floor(strip-unit($value / $font-size-root) * 100) / 100) * 1rem;
+    }
+
+    @return $value;
   }
 
   @error 'The spacing map does not contain the size: `#{$size}`.';
 }
 
-@function space-x($size) {
+@function space-x($size, $units: null) {
   @return _get-space($size, x);
 }
 
-@function space-y($size) {
+@function space-y($size, $units: null) {
   @return _get-space($size, y);
 }
 
 // endregion ////////////////////////////////////////////////////////////   End Other Functions
-
-// endregion ////////////////////////////////////////////////////////////   End Getter Functions
 
 // region ///////////////////////////////////////////////////////////////   Setter Functions
 
