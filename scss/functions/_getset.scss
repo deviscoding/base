@@ -61,7 +61,7 @@
       @error "The component `#{$c}` does not have individual features.";
     } @else {
       $fKey: quote($f);
-      @if not(map-has-key($component),$fKey) {
+      @if not(map-has-key($component,$fKey)) {
         @error "The component `#{$c}` does not have a feature named `#{$f}`.";
       } @else {
         @return map-get($component, $fKey);
