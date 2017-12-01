@@ -6,7 +6,7 @@
 // region ///////////////////////////////////////////////////////////////   Material Design Shadows
 
 @mixin elevation($level) {
-  @if feature(shadows) {
+  @if theme(shadows) {
     @if $level == 0 {
       box-shadow: none;
     }
