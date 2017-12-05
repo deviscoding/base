@@ -83,6 +83,7 @@
 // region ///////////////////////////////////////////////////////////////   Other Functions
 
 @function _get-space($size,$axis, $units: null) {
+  @if not($units == null) { $units: unquote($units) }
   @if map-has-key($spacing,$size) {
     $value: map-deep-get($spacing,$size,$axis);
 
@@ -92,7 +93,11 @@
         @error "The variable `$font-size-root` must exist to use `space-#{$axis}` function.";
       }
 
-      @if $units == px and unit($value) == rem {
+      @if $units == rem and unit($value) == '' {
+        @return $value * 1rem;
+      }
+
+      @if ($units == px and unit($value) == rem) or ($units == px and unit($value) == '') {
         @return $font-size-root * strip-unit($value);
       }
 
@@ -100,7 +105,7 @@
         @return (floor(strip-unit($value / $font-size-root) * 100) / 100) * 1rem;
       }
 
-      @error "Only PX and REM units can be requested in the `space-#{$axis}` function.";
+      @error "Only PX and REM units can be requested in the `space-#{$axis}` function.  You requested `#{$units}`";
     }
 
     @return $value;
