@@ -1,3 +1,4 @@
+@import "functions";
 @import "map";
 
 // region ///////////////////////////////////////////////////////////////   Getter Functions
@@ -85,12 +86,21 @@
   @if map-has-key($spacing,$size) {
     $value: map-deep-get($spacing,$size,$axis);
 
-    @if $units == px and unit($value) == rem {
-      @return $font-size-root * strip-unit($value);
-    }
+    @if $units != null and $units != unit($value) {
 
-    @if $units == rem and unit($value) == px {
-      @return (floor(strip-unit($value / $font-size-root) * 100) / 100) * 1rem;
+      @if not(variable-exists(font-size-root)) {
+        @error "The variable `$font-size-root` must exist to use `space-#{$axis}` function.";
+      }
+
+      @if $units == px and unit($value) == rem {
+        @return $font-size-root * strip-unit($value);
+      }
+
+      @if $units == rem and unit($value) == px {
+        @return (floor(strip-unit($value / $font-size-root) * 100) / 100) * 1rem;
+      }
+
+      @error "Only PX and REM units can be requested in the `space-#{$axis}` function.";
     }
 
     @return $value;
@@ -100,11 +110,11 @@
 }
 
 @function space-x($size, $units: null) {
-  @return _get-space($size, x);
+  @return _get-space($size, x, $units);
 }
 
 @function space-y($size, $units: null) {
-  @return _get-space($size, y);
+  @return _get-space($size, y, $units);
 }
 
 // endregion ////////////////////////////////////////////////////////////   End Other Functions
