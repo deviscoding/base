@@ -1,10 +1,8 @@
-/*!
- * Search Field JQuery Plugin --
+/**
+ * Strapless Search Field
  * Configures the given element as a search field, performing the given callbacks on search & clear.
  *
- * @version Strapless Search Field v1.1.4
- * @license http://github.com/strapless/base/LICENSE
- * @author  AMJones <am@jonesiscoding.com>
+ * @returns {jQuery}
  */
 (function($) {
 

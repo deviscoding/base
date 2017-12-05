@@ -1,9 +1,6 @@
-/*!
+/**
  * Fires an event after the last repeated event.  Useful for resize & similar events.
  *
- * @version Strapless Afterwards v1.1.4
- * @license http://github.com/strapless/base/LICENSE
- * @author  AMJones <am@jonesiscoding.com>
  * @returns {jQuery}
  */
 ;(function($){
