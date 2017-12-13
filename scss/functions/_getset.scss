@@ -93,19 +93,23 @@
         @error "The variable `$font-size-root` must exist to use `space-#{$axis}` function.";
       }
 
+      $val-unit: unit($value);
+
       @if $units == rem and unit($value) == '' {
         @return $value * 1rem;
       }
 
-      @if ($units == px and unit($value) == rem) or ($units == px and unit($value) == '') {
+      @if ($units == px and $val-unit == rem) or ($units == px and $val-unit == '') {
+        //noinspection SassScssUnresolvedVariable
         @return $font-size-root * strip-unit($value);
       }
 
-      @if $units == rem and unit($value) == px {
+      @if $units == rem and $val-unit == px {
+        //noinspection SassScssUnresolvedVariable
         @return (floor(strip-unit($value / $font-size-root) * 100) / 100) * 1rem;
       }
 
-      @error "Only PX and REM units can be requested in the `space-#{$axis}` function.  You requested `#{$units}`";
+      @error "Only `px` and `rem` units can be requested in the `space-#{$axis}` function, not `#{$units}`.";
     }
 
     @return $value;
