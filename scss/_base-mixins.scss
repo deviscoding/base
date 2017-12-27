@@ -7,48 +7,63 @@
 
 @mixin elevation($level) {
   @if theme(shadows) {
-    @if $level == 0 {
+    $umbra: 0;
+    $penumbra: 0;
+    $ambient: 0;
+    @if $level > 0 {
+      @if $level == 1 {
+        $umbra:    0 2px 1px -1px;
+        $penumbra: 0 1px 1px 0;
+        $ambient:  0 1px 3px 0;
+      }
+      @else if $level == 2 {
+        $umbra:    0 3px 1px -2px;
+        $penumbra: 0 2px 2px 0;
+        $ambient:  0 1px 5px 0;
+      }
+      @else if $level == 3 {
+        $umbra:    0 3px 3px -2px;
+        $penumbra: 0 3px 4px 0;
+        $ambient:  0 1px 8px 0;
+      }
+      @else if $level == 4 {
+        $umbra:    0 2px 4px -1px;
+        $penumbra: 0 4px 5px 0;
+        $ambient:  0 1px 10px 0;
+      }
+      @else if $level == 6 {
+        $umbra:    0 3px 5px -1px;
+        $penumbra: 0 6px 10px 0;
+        $ambient:  0 1px 18px 0;
+      }
+      @else if $level == 8 {
+        $umbra:    0 5px 5px -3px;
+        $penumbra: 0 8px 10px 1px;
+        $ambient:  0 3px 14px 2px;
+      }
+      @else if $level == 16 {
+        $umbra:    0 8px 10px -5px;
+        $penumbra: 0 16px 24px 2px;
+        $ambient:  0 6px 30px 5px;
+      }
+      @else if $level == 24 {
+        $umbra: 0 24px 38px 3px;
+        $penumbra: 0 9px 46px 8px;
+        $ambient: 0 11px 15px -7px;
+      }
+      @else {
+        @error $level;
+      }
+
+      @debug $level;
+
+      $umbra-color: rgba(0,0,0, $shadow-key-umbra-opacity);
+      $penumbra-color: rgba(0,0,0, $shadow-key-penumbra-opacity);
+      $ambient-color: rgba(0,0,0, $shadow-ambient-shadow-opacity);
+
+      box-shadow: $umbra $umbra-color, $penumbra $penumbra-color, $ambient $ambient-color;
+    } @else {
       box-shadow: none;
-    }
-    @if $level == 1 {
-      box-shadow: 0 1px 1px 0 rgba(0, 0, 0, $shadow-key-penumbra-opacity),
-                  0 2px 1px -1px rgba(0, 0, 0, $shadow-key-umbra-opacity),
-                  0 1px 3px 0 rgba(0, 0, 0, $shadow-ambient-shadow-opacity);
-    }
-    @if $level == 2 {
-      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, $shadow-key-penumbra-opacity),
-                  0 3px 1px -2px rgba(0, 0, 0, $shadow-key-umbra-opacity),
-                  0 1px 5px 0 rgba(0, 0, 0, $shadow-ambient-shadow-opacity);
-    }
-    @else if $level == 3 {
-      box-shadow: 0 3px 4px 0 rgba(0, 0, 0, $shadow-key-penumbra-opacity),
-                  0 3px 3px -2px rgba(0, 0, 0, $shadow-key-umbra-opacity),
-                  0 1px 8px 0 rgba(0, 0, 0, $shadow-ambient-shadow-opacity);
-    }
-    @else if $level == 4 {
-      box-shadow: 0 4px 5px 0 rgba(0, 0, 0, $shadow-key-penumbra-opacity),
-                  0 1px 10px 0 rgba(0, 0, 0, $shadow-ambient-shadow-opacity),
-                  0 2px 4px -1px rgba(0, 0, 0, $shadow-key-umbra-opacity);
-    }
-    @else if $level == 6 {
-      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, $shadow-key-penumbra-opacity),
-                  0 1px 18px 0 rgba(0, 0, 0, $shadow-ambient-shadow-opacity),
-                  0 3px 5px -1px rgba(0, 0, 0, $shadow-key-umbra-opacity);
-    }
-    @else if $level == 8 {
-      box-shadow: 0 8px 10px 1px rgba(0, 0, 0, $shadow-key-penumbra-opacity),
-                  0 3px 14px 2px rgba(0, 0, 0, $shadow-ambient-shadow-opacity),
-                  0 5px 5px -3px rgba(0, 0, 0, $shadow-key-umbra-opacity);
-    }
-    @else if $level == 16 {
-      box-shadow: 0 16px 24px 2px rgba(0, 0, 0, $shadow-key-penumbra-opacity),
-                  0  6px 30px 5px rgba(0, 0, 0, $shadow-ambient-shadow-opacity),
-                  0  8px 10px -5px rgba(0, 0, 0, $shadow-key-umbra-opacity);
-    }
-    @else if $level == 24 {
-      box-shadow: 0  9px 46px  8px rgba(0, 0, 0, $shadow-key-penumbra-opacity),
-                  0 11px 15px -7px rgba(0, 0, 0, $shadow-ambient-shadow-opacity),
-                  0 24px 38px  3px rgba(0, 0, 0, $shadow-key-umbra-opacity);
     }
   }
 }
