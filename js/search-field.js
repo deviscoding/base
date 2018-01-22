@@ -4,7 +4,7 @@
  *
  * @returns {jQuery}
  */
-(function($) {
+;(function($) {
 
   $.searchField = function(el, options) {
 
@@ -34,6 +34,7 @@
 
       plugin.settings = $.extend({}, defaults, options);
       plugin.currentValue = '';
+      plugin.onChangeInterval = {};
 
       // Remove autocomplete attribute to prevent native suggestions
       $input.attr('autocomplete', 'off');
@@ -46,8 +47,8 @@
       $input
           .on('keyup', function (e) { plugin.onKeyUp(e); })
           .on('keydown', function (e) { plugin.onKeyDown(e); })
-          .on('blur', function () { plugin.doCallback(); })
-          .on('change', function () { plugin.doCallback(); })
+          .on('blur', function () { if( plugin.currentValue !== $input.val() ) {  plugin.doCallback(); } })
+          .on('change', function () { if( plugin.currentValue !== $input.val() ) {  plugin.doCallback(); } })
       ;
     };
 
@@ -99,9 +100,12 @@
     };
 
     plugin.isSpecialKey = function(keyPressed) {
+      var retval = false;
       $.each( keys, function( key, value ) {
-        return (value === keyPressed);
+        retval = retval || (value === keyPressed);
       });
+
+      return retval;
     };
 
     plugin.doCallback = function() {
