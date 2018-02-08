@@ -97,3 +97,22 @@
 }
 
 // endregion ////////////////////////////////////////////////////////////   End SVG String
+
+// region ///////////////////////////////////////////////////////////////   Other Functions
+
+@function breakpoint-infix($bp) {
+  @if variable-exists(grid-breakpoints) == false {
+    @error 'You must set the $grid-breakpoints map prior to the first usage of the `breakpoint-infix` function.';
+  }
+  @if map-has-key($grid-breakpoints, $bp) {
+    $min: strip-unit(map-get($grid-breakpoints, $bp));
+    @if $min > 0 {
+      @return -#{$bp};
+    }
+  }
+
+  @return null;
+}
+
+// endregion ////////////////////////////////////////////////////////////   End Other Functions
+
