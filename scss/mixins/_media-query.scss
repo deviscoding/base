@@ -1,3 +1,7 @@
+@import "../variables/root-variables";
+@import "../functions/functions";
+@import "../functions/map";
+
 
 @function get-expression-operator($expression) {
   @each $operator in ('>=', '<=', '>', '<', '≥', '≤', '=') {
@@ -5,6 +9,8 @@
       @return $operator;
     }
   }
+
+  @return '';
 }
 
 @function get-expression-value($expression, $operator) {
@@ -13,60 +19,69 @@
   @return $value;
 }
 
+@function get-width-string($operator, $min: 0, $max: 0) {
+  @if $operator == '≥' {  $operator: '>='; }
+  @if $operator == '≤' {  $operator: '<='; }
+  @if $operator == '=' {
+    @if $max > 0 {
+      @return ' (min-width: ' + $min + ') and (max-width: ' + $max + ')';
+    } @else {
+      @return ' (min-width: ' + $min + ')';
+    }
+  } @else if $operator == '<' {
+    @return ' (max-width: ' + ($min - 1) + ')';
+  } @else if $operator == '>' {
+    @return ' (min-width: ' + ($max + 1) + ')';
+  } @else if $operator == '<=' {
+    @return ' (max-width: ' + $max + ')';
+  } @else if $operator == '>=' {
+    @return ' (min-width: ' + $min + ')';
+  }
+
+  @return '';
+}
+
 @function get-condition-string($viewport,$operator) {
   @each $class, $min in $grid-breakpoints {
     @if($class == $viewport) {
       $max: map-get-next($grid-breakpoints,$class, 0);
-      @if $operator == '≥' {  $operator: '>='; }
-      @if $operator == '≤' {  $operator: '<='; }
-      @if $operator == '=' {
-        @if $max > 0 {
-          @return ' (min-width: ' + $min + ') and (max-width: ' + $max + ')';
-        } @else {
-          @return ' (min-width: ' + $min + ')';
-        }
-      } @else if $operator == '<' {
-        @return ' (max-width: ' + ($min - 1) + ')';
-      } @else if $operator == '>' {
-        @return ' (min-width: ' + ($max + 1) + ')';
-      } @else if $operator == '<=' {
-        @return ' (max-width: ' + $max + ')';
-      } @else if $operator == '>=' {
-        @return ' (min-width: ' + $min + ')';
-      }
+      @return get-width-string($operator,$min,$max);
     }
   }
 
   @return '';
 }
 
+@function _media($conditions...) {
+  $conditions-string: "";
+  @each $condition in $conditions {
+    // Basic String Conditions
+    @if map-has-key($condition-map, $condition) {
+      $conditions-string: $conditions-string + map-get($condition-map,$condition);
+    } @else {
+      $operator: get-expression-operator($condition);
+      $value: get-expression-value($condition,$operator);
+      // Breakpoint Based Conditions
+      @if map-has-key($grid-breakpoints, $value) {
+        $conditions-string: $conditions-string + get-condition-string($value,$operator);
+      } @else {
+        $conditions-string: $conditions-string + get-width-string($operator,$value,$value);
+      }
+    }
+  }
+
+  @return $conditions-string;
+}
+
 // Used with @include media("<sm",">xs") etc.
 @mixin media($conditions...) {
-  $condition-string: '';
-  @each $condition in $conditions {
-    $operator: get-expression-operator($condition);
-    $value: get-expression-value($condition, $operator);
-    $condition-string: $condition-string + get-condition-string($value,$operator);
-  }
-  @media screen and #{$condition-string} {
-    @content
-  }
-}
-
-@mixin media-breakpoint-up($bp) {
-  @include media(">=#{$bp}") {
-    @content;
-  }
-}
-
-@mixin media-breakpoint-down($bp) {
-  @include media("<=#{$bp}") {
+  @media #{_media($conditions)} {
     @content;
   }
 }
 
 @mixin touch() {
-  html.touch {
+  @media #{_media("screen", "touch")} {
     @content;
   }
 }

@@ -1,8 +1,0 @@
-// Note: This mixin is for legacy bootstrap code that calls it.  Vendor prefixes aren't needed for opacity.
-@mixin opacity($o) {
-  opacity: $o;
-}
-
-@mixin user-select($value) {
-  user-select: $value;
-}
