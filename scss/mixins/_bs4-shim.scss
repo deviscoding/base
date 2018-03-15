@@ -1,16 +1,3 @@
-@import "media-query";
-
-@mixin media-breakpoint-up($bp) {
-  @include media("screen", ">=#{$bp}") {
-    @content;
-  }
-}
-
-@mixin media-breakpoint-down($bp) {
-  @include media("screen", "<=#{$bp}") {
-    @content;
-  }
-}
 
 // Note: This mixin is for legacy bootstrap code that calls it.  Vendor prefixes aren't needed for opacity.
 @mixin opacity($o) {

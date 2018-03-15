@@ -3,22 +3,6 @@
 
 // region ///////////////////////////////////////////////////////////////   Getter Functions
 
-@function breakpoint($breakpoint) {
-  @if map-has-key($grid-breakpoints,$breakpoint) {
-    @return map-get($grid-breakpoints, $breakpoint);
-  }
-
-  @error "The breakpoint `#{$breakpoint} does not exist in the $grid-breakpoints map.";
-}
-
-@function container($breakpoint) {
-  @if map-has-key($container-max-widths,$breakpoint) {
-    @return map-get($container-max-widths, $breakpoint);
-  }
-
-  @error "The breakpoint `#{$breakpoint} does not exist in the $container-max-widths map.";
-}
-
 /// Constant Getter - Credit to https://twitter.com/HugoGiraudel
 ///
 /// @param    {String} $name          Name of constant to get
@@ -193,22 +177,6 @@
         $theme: set-map-key($theme, $fKey, $v) !global;
       }
     }
-  }
-}
-
-@mixin set-breakpoint($breakpoint,$value) {
-  @if not(variable-exists(grid-breakpoints)) {
-    @error "You may not use the `set-breakpoint` mixin without the $grid-breakpoints map.  Please include `root-variables` prior to this usage."
-  } @else {
-    $grid-breakpoints: set-map-key($grid-breakpoints, $breakpoint, $value) !global;
-  }
-}
-
-@mixin set-max-width($breakpoint,$value) {
-  @if not(variable-exists(grid-breakpoints)) {
-    @error "You may not use the `set-max-width` mixin without the $container-max-widths map.  Please include `root-variables` prior to this usage."
-  } @else {
-    $container-max-widths: set-map-key($container-max-widths, $breakpoint, $value) !global;
   }
 }
 

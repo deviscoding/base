@@ -56,35 +56,6 @@ $theme: (
 
 // endregion ////////////////////////////////////////////////////////////   End Features
 
-// region ///////////////////////////////////////////////////////////////   Breakpoint & Grid
-
-
-$grid-breakpoints: (
-     xs: 0,
-     sm: 576px,
-     md: 768px,
-     lg: 992px,
-     xl: 1200px
-                   ) !default;
-
-$container-max-widths: (
-     sm: 540px,
-     md: 720px,
-     lg: 960px,
-     xl: 1140px
-                       ) !default;
-
-$condition-map: (
-    "screen": "screen",
-    "print" : "print",
-    "coarse": "(pointer: fine)",
-    "touch" : "(pointer: coarse), (-moz-touch-enabled)",
-    "fine"  : "(pointer: fine), not all and (-moz-touch-enabled)",
-    "hidpi" : "(-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi)"
-);
-
-// endregion ////////////////////////////////////////////////////////////   End Breakpoint & Grid
-
 // region ///////////////////////////////////////////////////////////////  Utility Variables
 
 $utility:
@@ -93,7 +64,6 @@ $utility:
         md,
         lg,
         xl,
-        touch,
         fallback,
         baseline,
         ios,
