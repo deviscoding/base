@@ -75,7 +75,7 @@
 
 // Used with @include media("<sm",">xs") etc.
 @mixin media($conditions...) {
-  @media #{_media($conditions)} {
+  @media #{_media($conditions...)} {
     @content;
   }
 }
