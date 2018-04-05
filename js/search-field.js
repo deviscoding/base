@@ -33,7 +33,7 @@
     plugin.init = function() {
 
       plugin.settings = $.extend({}, defaults, options);
-      plugin.currentValue = '';
+      plugin.currentValue = $input.val();
       plugin.onChangeInterval = {};
 
       // Remove autocomplete attribute to prevent native suggestions
