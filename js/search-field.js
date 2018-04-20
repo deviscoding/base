@@ -57,11 +57,12 @@
 
       switch (keyPressed) {
         case keys.ESC:
-          $input.val('');
+          $input.val('').trigger('change');
           return;
         case keys.TAB:
+          if( plugin.currentValue !== $input.val() ) {  plugin.doCallback(); }
+          return;
         case keys.RETURN:
-          // Perform immediate search
           if( plugin.currentValue !== $input.val() ) {  plugin.doCallback(); }
           break;
         default:
