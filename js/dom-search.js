@@ -1,5 +1,5 @@
 /**
- * Strapless DomSearch v1.1.4 --
+ * DevIsCoding DomSearch v1.1.4 --
  * Searches the given selector for the given text value, then performs the given callback.
  *
  * @returns {jQuery}

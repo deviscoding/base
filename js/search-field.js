@@ -1,5 +1,5 @@
 /**
- * Strapless Search Field
+ * DevIsCoding Search Field
  * Configures the given element as a search field, performing the given callbacks on search & clear.
  *
  * @returns {jQuery}
