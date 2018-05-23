@@ -10,7 +10,10 @@
       "css"
   ],
   "homepage": "https://www.github.com/deviscoding/base",
-  "version": "2.0.1",
+  "version": "2.0.2",
+  "replace": {
+    "strapless/base": "^2.0"
+  },
   "authors": [
       {
           "name": "Aaron M Jones",
