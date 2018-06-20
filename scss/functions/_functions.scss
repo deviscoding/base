@@ -44,6 +44,48 @@
   @return $string;
 }
 
+// Remove empty spaces from ends of string
+//
+// @author Hugo Giraudel (Original), Aaron M Jones (modified to work with quoted strings)
+// 
+// @param  {String}  $string     - The string to trim previously quoted strings.
+@function str-trim($string) {
+  $unquote: unquote(quote($string));
+  $start: 1;
+  $end: str-length($unquote);
+
+  @for $i from 1 through str-length($unquote) {
+    $first: str-slice($unquote, $i, $i);
+    $last: str-slice($unquote, -$i, -$i);
+
+    @if $first == " " and $i + 1 == $start + 1 {
+      $start: $i + 1;
+    }
+
+    @if $last == " " and str-length($unquote) - $i == $end - 1 {
+      $end: str-length($unquote) - $i;
+    }
+  }
+
+  $trimmed: str-slice($unquote, $start, $end);
+
+  @return if(($unquote != $string), quote($trimmed), $trimmed);
+}
+
+// Surround String with Parenthesis.  If doNotQuote property is true, quoted strings are unquoted.
+//
+// @param  {String}  $string     - The string to enclose in parenthesis.
+// @param  {Boolean} $doNotQuote - TRUE: Leave the string unquoted, FALSE: Return quotes to previously quoted strings.
+@function parenthesis($string,$doNotQuote: false) {
+  $unquote: str-trim(unquote(quote($string)));
+  $left: unquote("(");
+  $right: unquote(")");
+  $tItem: if(str-slice($unquote,1,1) == $left,$unquote,#{$left}#{$unquote});
+  $tItem: if(str-slice($tItem,-1,-1) == $right,$tItem,#{$tItem}#{$right});
+
+  @return if(($unquote != $string and $doNotQuote != true), quote($tItem), $tItem);
+}
+
 // Explodes a string into a SASS list by the given delimiter
 // @author Hugo Giraudel (modified from original)
 @function _str-explode($string, $delimiter: "") {
